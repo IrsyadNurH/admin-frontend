@@ -167,10 +167,11 @@ const handleEdit = (logo: DevelopmentApplicationLogoData) => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-6">Development Application Logos</h2>
       <Table 
-        columns={columns} 
-        data={filteredData}
-        isDokumentasi={true}
-      />
+          columns={columns} 
+          data={filteredData}
+          isDokumentasi={true}
+          documentationType="development"
+        />
 
       <Modal
         isOpen={isEditModalOpen}

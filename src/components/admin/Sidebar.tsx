@@ -16,31 +16,17 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
   const handleLogout = async () => {
     try {
-      // Get email from localStorage
-      const userEmail = localStorage.getItem('userEmail');
-      
-      if (!userEmail) {
-        console.error('No user email found in localStorage');
-        return;
-      }
-      
-      // Send logout request and create log entry
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/logout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
-        body: JSON.stringify({
-          email: userEmail
-        })
+        credentials: 'include'
       });
   
       if (response.ok) {
         // Clear local storage
-        localStorage.removeItem('token');
-        localStorage.removeItem('userEmail');
-  
+        localStorage.clear();
         // Redirect to login page
         window.location.href = '/';
       } else {

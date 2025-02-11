@@ -4,7 +4,8 @@ interface LogEntry {
   id: number;
   action: 'login' | 'logout';
   timestamp: string;
-  user_email: string;
+  device_info: string;
+  ip_address: string;
   user_timezone?: string;
 }
 
@@ -25,6 +26,30 @@ const Logs: FC = () => {
       second: '2-digit',
       hour12: false
     });
+  };
+  const parseDeviceInfo = (deviceInfo: string) => {
+    const [device, rest] = deviceInfo.split(' - ');
+    const ipMatch = rest?.match(/IP: ([^\s]+)/);
+    return {
+      device: device || 'Unknown Device',
+      details: rest?.split(' - IP:')[0] || '',
+      ip: ipMatch ? ipMatch[1] : 'Unknown IP'
+    };
+  };
+
+  const getDeviceColor = (deviceInfo: string): string => {
+    const deviceLower = deviceInfo.toLowerCase();
+    if (deviceLower.includes('mobile') || deviceLower.includes('android') || deviceLower.includes('iphone')) {
+      return 'bg-blue-100 text-blue-800';
+    } else if (deviceLower.includes('mac')) {
+      return 'bg-gray-100 text-gray-800';
+    } else if (deviceLower.includes('windows')) {
+      return 'bg-indigo-100 text-indigo-800';
+    } else if (deviceLower.includes('linux')) {
+      return 'bg-yellow-100 text-yellow-800';
+    } else {
+      return 'bg-purple-100 text-purple-800';
+    }
   };
 
   useEffect(() => {
@@ -69,7 +94,7 @@ const Logs: FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow">
+    <div className="p-6 mt-5 bg-white rounded-lg shadow">
       <h2 className="text-2xl font-bold mb-6">Logs</h2>
       <p className="text-sm text-gray-600 mb-4">Timezone: {userTimezone}</p>
       {logs.length === 0 ? (
@@ -83,7 +108,7 @@ const Logs: FC = () => {
                   Aksi
                 </th>
                 <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Pengguna
+                    Perangkat
                 </th>
                 <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Catatan Waktu
@@ -94,30 +119,35 @@ const Logs: FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {logs.map((log) => (
-                <tr key={log.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap capitalize">
-                    <span className={`px-2 py-1 rounded-full text-sm ${
-                      log.action === 'login' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {log.action}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">{log.user_email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {formatTimestamp(log.timestamp)}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {log.user_timezone || userTimezone}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  {logs.map((log) => (
+                    <tr key={log.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap capitalize">
+                        <span className={`px-2 py-1 rounded-full text-sm ${
+                          log.action === 'login' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                        }`}>
+                          {log.action}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-2 py-1 rounded text-sm ${getDeviceColor(log.device_info)}`}>
+                          {log.device_info}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {formatTimestamp(log.timestamp)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {log.user_timezone || userTimezone}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
         </div>
       )}
     </div>
   );
 };
 
+          
 export default Logs;

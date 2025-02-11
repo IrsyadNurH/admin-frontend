@@ -151,7 +151,7 @@ const ProjectTestiClientTable = () => {
               <img
                 src={value}
                 alt="Testimonial"
-                className="w-20 h-16 object-cover rounded-full cursor-pointer"
+                className="w-16 h-16 object-cover rounded-full cursor-pointer"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
                 <span className="text-white text-xs text-center px-1">View Image</span>
