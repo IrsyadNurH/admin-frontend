@@ -99,8 +99,7 @@ const ProjectTestimoni: FC = () => {
   }, [searchQuery, data]);
 
   return (
-    <div className="card">
-      <h2>Project Testimoni</h2>
+    <div >
       <Table 
         columns={columns} 
         data={filteredData}

@@ -164,8 +164,8 @@ const handleEdit = (logo: DevelopmentApplicationLogoData) => {
   );
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Development Application Logos</h2>
+    <div >
+    
       <Table 
           columns={columns} 
           data={filteredData}

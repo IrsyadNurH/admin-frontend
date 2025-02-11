@@ -8,12 +8,14 @@ interface AboutUsData {
   id: number;
   content_type: string;
   content: string;
+  isEditing?: boolean;
 }
 
 const TetangKami: FC = () => {
   const [data, setData] = useState<AboutUsData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { searchQuery } = useSearch();
+  const [editingData, setEditingData] = useState<{[key: string]: string}>({});
 
   const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -38,31 +40,24 @@ const TetangKami: FC = () => {
   }, []);
 
   const handleEdit = async (item: AboutUsData) => {
-    const newcontent_type = prompt('Enter new content type:', item.content_type);
-    const newContent = prompt('Enter new content:', item.content);
-    
-    if (!newcontent_type || !newContent) {
-      alert('Both content type and content are required');
-      return;
-    }
-
     setIsLoading(true);
     try {
       const response = await api.put(`/api/about-us/${item.id}`, {
-        content_type: newcontent_type,
-        content: newContent
+        content_type: editingData[`content_type_${item.id}`] || item.content_type,
+        content: editingData[`content_${item.id}`] || item.content
       });
 
-      if (response.status === 200 && response.data) {
+      if (response.status === 200) {
         await fetchData();
+        setData(prev => prev.map(row => ({
+          ...row,
+          isEditing: false
+        })));
+        setEditingData({});
       }
     } catch (error: any) {
       console.error('Update failed:', error);
-      const message = error.response?.data?.error || 
-                     error.response?.data?.message || 
-                     error.message || 
-                     'An unknown error occurred';
-      alert(`Failed to update: ${message}`);
+      alert(`Failed to update: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
@@ -76,24 +71,84 @@ const TetangKami: FC = () => {
     {
       Header: 'Content Type',
       accessor: 'content_type',
+      Cell: ({ row }) => (
+        row.original.isEditing ? (
+          <input
+            type="text"
+            className="w-full p-1 border rounded"
+            defaultValue={row.original.content_type} // Menggunakan defaultValue alih-alih value
+            onBlur={(e) => setEditingData(prev => ({
+              ...prev,
+              [`content_type_${row.original.id}`]: e.target.value
+            }))}
+          />
+        ) : (
+          row.original.content_type
+        )
+      )
     },
     {
       Header: 'Content',
       accessor: 'content',
+      Cell: ({ row }) => (
+        row.original.isEditing ? (
+          <input
+            type="text"
+            className="w-full p-1 border rounded"
+            defaultValue={row.original.content} // Menggunakan defaultValue alih-alih value
+            onBlur={(e) => setEditingData(prev => ({
+              ...prev,
+              [`content_${row.original.id}`]: e.target.value
+            }))}
+          />
+        ) : (
+          row.original.content
+        )
+      )
     },
     {
       Header: 'Actions',
       Cell: ({ row }) => (
-        <button 
-          onClick={() => handleEdit(row.original)}
-          className="text-blue-500 hover:underline"
-        >
-          Edit
-        </button>
+        row.original.isEditing ? (
+          <div className="flex gap-2">
+            <button 
+              onClick={() => handleEdit(row.original)}
+              className="text-green-500 hover:underline"
+              disabled={isLoading}
+            >
+              Save
+            </button>
+            <button 
+              onClick={() => {
+                setData(prev => prev.map(item => 
+                  item.id === row.original.id ? { ...item, isEditing: false } : item
+                ));
+                setEditingData({});
+              }}
+              className="text-red-500 hover:underline"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <button 
+            onClick={() => {
+              setData(prev => prev.map(item => 
+                item.id === row.original.id ? { ...item, isEditing: true } : item
+              ));
+              setEditingData({
+                [`content_type_${row.original.id}`]: row.original.content_type,
+                [`content_${row.original.id}`]: row.original.content
+              });
+            }}
+            className="text-blue-500 hover:underline"
+          >
+            Edit
+          </button>
+        )
       ),
     }
   ];
-
   const filteredData = useMemo(() => {
     return data.filter(item => 
       Object.values(item).some(value => 

@@ -147,14 +147,16 @@ const ProjectTestiClientTable = () => {
   
         return (
           <>
-            <div className="relative group" onClick={() => setShowModal(true)}>
-              <img
-                src={value}
-                alt="Testimonial"
-                className="w-16 h-16 object-cover rounded-full cursor-pointer"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
-                <span className="text-white text-xs text-center px-1">View Image</span>
+            <div className="relative w-16 h-16" onClick={() => setShowModal(true)}>
+              <div className="w-full h-full rounded-full overflow-hidden">
+                <img
+                  src={value}
+                  alt="Testimonial"
+                  className="w-full h-full object-cover cursor-pointer"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 rounded-full hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+                  <span className="text-white text-xs text-center px-1">View Image</span>
+                </div>
               </div>
             </div>
             
@@ -212,10 +214,8 @@ const ProjectTestiClientTable = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-6">
-      <div className="flex justify-between mb-6">
-        <h2 className="text-2xl font-bold">Project Client Testimonials</h2>
-      </div>
+    <div >
+      
       
       <Table 
         columns={projectTestiClientColumns} 

@@ -4,6 +4,7 @@ import { Column } from 'react-table';
 import { useSearch } from '../../context/SearchContext';
 import axios from 'axios';
 import Modal from 'react-modal';
+import LogsChart from './LogsChart';
 
 type DokumentasiData = {
   id: number;
@@ -162,8 +163,7 @@ const DokumentasiTable: FC = () => {
   );
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Dokumentasi</h2>
+    <div>
       <Table 
         columns={columns} 
         data={filteredData}

@@ -162,8 +162,8 @@ const SecurityMitraLogo: FC = () => {
   );
 
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Security Mitra Logos</h2>
+    <div >
+      
       <Table 
           columns={columns} 
           data={filteredData}

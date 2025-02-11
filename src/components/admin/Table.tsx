@@ -235,6 +235,7 @@ const Table = <T extends object>({ columns, data, isTestimonial, isProjectTestiC
             value={globalFilter || ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             className="border rounded px-4 py-2 w-full md:w-1/3"
+            placeholder="Search..."          
           />
           {(isTestimonial || isProjectTestiClient) && (
             <button 
