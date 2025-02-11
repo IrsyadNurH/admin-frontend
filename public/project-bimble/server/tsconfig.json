@@ -1,0 +1,31 @@
+/project-bimble
+├── /backend
+│   ├── /controllers
+│   │   └── projectController.ts
+│   ├── /models
+│   │   └── projectModel.ts
+│   ├── /routes
+│   │   └── projectRoutes.ts
+│   ├── /config
+│   │   └── db.ts
+│   ├── server.ts
+│   └── package.json
+├── /frontend
+│   ├── /src
+│   │   ├── /components
+│   │   │   ├── ProjectBimble.tsx
+│   │   │   ├── Table.tsx
+│   │   │   ├── ProjectTestimoni.tsx
+│   │   │   ├── ProjectTestiClient.tsx
+│   │   │   ├── KerjaSamaDev.tsx
+│   │   │   ├── DevelopmentApplicationLogo.tsx
+│   │   │   ├── SecurityMitraLogo.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── /context
+│   │   │   └── SearchContext.tsx
+│   │   ├── /hooks
+│   │   │   └── useFetch.ts
+│   │   ├── App.tsx
+│   │   └── index.tsx
+│   └── package.json
+└── README.md

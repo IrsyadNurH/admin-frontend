@@ -1,0 +1,34 @@
+/project-bimble
+│
+├── /client                     # Frontend React application
+│   ├── /src
+│   │   ├── /components         # React components
+│   │   │   ├── ProjectBimble.tsx
+│   │   │   ├── Table.tsx
+│   │   │   ├── ProjectTestimoni.tsx
+│   │   │   ├── ProjectTestiClient.tsx
+│   │   │   ├── KerjaSamaDev.tsx
+│   │   │   ├── DevelopmentApplicationLogo.tsx
+│   │   │   ├── SecurityMitraLogo.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── /context            # Context API for state management
+│   │   │   └── SearchContext.tsx
+│   │   ├── /hooks              # Custom hooks
+│   │   ├── /services           # API service calls
+│   │   │   └── apiService.ts
+│   │   └── App.tsx
+│   └── package.json
+│
+├── /server                     # Backend Node.js application
+│   ├── /controllers            # Controllers for handling requests
+│   │   └── projectController.js
+│   ├── /models                 # Database models
+│   │   └── projectModel.js
+│   ├── /routes                 # API routes
+│   │   └── projectRoutes.js
+│   ├── /config                 # Configuration files
+│   │   └── db.js
+│   ├── server.js               # Main server file
+│   └── package.json
+│
+└── README.md
