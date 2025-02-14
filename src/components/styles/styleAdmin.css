@@ -10,7 +10,7 @@
   top: 0;
   left: 0;
   margin: 20px 0 20px 6px;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 15px);
   width: 260px;
   background-color: #ffffff;
   border-radius: 10px;
@@ -436,7 +436,7 @@ modal area style
   }
 
   .modal {
-    width: 75%;
+    width: 70%;
     max-width: 400px;
     max-height: 90vh;
     margin: auto;

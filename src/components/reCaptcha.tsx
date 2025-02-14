@@ -46,10 +46,13 @@ const ReCaptcha = memo(({ onVerify }: ReCaptchaProps) => {
         onError={handleError}
         theme="light"
         size="normal"
+        hl="id"
       />
     </div>
   );
 });
+
+ReCaptcha.displayName = 'ReCaptcha';
 
 ReCaptcha.displayName = 'ReCaptcha';
 
